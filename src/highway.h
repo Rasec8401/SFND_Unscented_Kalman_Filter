@@ -4,6 +4,7 @@
 #include "render/render.h"
 #include "sensors/lidar.h"
 #include "tools.h"
+#include<iostream>
 
 class Highway
 {
@@ -20,14 +21,14 @@ public:
 	// Parameters 
 	// --------------------------------
 	// Set which cars to track with UKF
-	std::vector<bool> trackCars = {true,true,true};
+	std::vector<bool> trackCars = {true,true,true};//{true,false,false};//{true,true,true};
 	// Visualize sensor measurements
 	bool visualize_lidar = true;
 	bool visualize_radar = true;
 	bool visualize_pcd = false;
 	// Predict path in the future using UKF
-	double projectedTime = 0;
-	int projectedSteps = 0;
+	double projectedTime = 2;
+	int projectedSteps = 4;
 	// --------------------------------
 
 	Highway(pcl::visualization::PCLVisualizer::Ptr& viewer)
@@ -149,6 +150,7 @@ public:
 		viewer->addText(" Y: "+std::to_string(rmse[1]), 30, 250, 20, 1, 1, 1, "rmse_y");
 		viewer->addText("Vx: "	+std::to_string(rmse[2]), 30, 225, 20, 1, 1, 1, "rmse_vx");
 		viewer->addText("Vy: "	+std::to_string(rmse[3]), 30, 200, 20, 1, 1, 1, "rmse_vy");
+        
 
 		if(timestamp > 1.0e6)
 		{
@@ -185,6 +187,9 @@ public:
 				viewer->addText("Vx: "+std::to_string(rmseFailLog[2]), 30, 75, 20, 1, 0, 0, "rmse_fail_vx");
 			if(rmseFailLog[3] > 0)
 				viewer->addText("Vy: "+std::to_string(rmseFailLog[3]), 30, 50, 20, 1, 0, 0, "rmse_fail_vy");
+		}
+		else{
+			viewer->addText("PASS!!! ", 30, 25, 20, 1, 0, 0, "");
 		}
 		
 	}

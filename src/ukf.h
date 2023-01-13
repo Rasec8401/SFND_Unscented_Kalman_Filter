@@ -3,7 +3,8 @@
 
 #include "Eigen/Dense"
 #include "measurement_package.h"
-
+using Eigen::MatrixXd;
+using Eigen::VectorXd;
 class UKF {
  public:
   /**
@@ -56,6 +57,10 @@ class UKF {
 
   // state covariance matrix
   Eigen::MatrixXd P_;
+  // state covariance matrix
+  Eigen::MatrixXd R_radar_;
+  // state covariance matrix
+  Eigen::MatrixXd R_lidar_;
 
   // predicted sigma points matrix
   Eigen::MatrixXd Xsig_pred_;
@@ -95,6 +100,11 @@ class UKF {
 
   // Sigma point spreading parameter
   double lambda_;
+
+// NIS result
+  double NIS_radar_;
+  double NIS_lidar_;
+  
 };
 
 #endif  // UKF_H
